@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voting System - Home</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+    <img src="1998832.webp" alt="Logo" class="logo-img">
+    <span>Informatics College Northgate</span>
+    </div>
+    
+  </header>
+
+  <main>
+    <div class="welcome-page">
+      <h1 class="float-animation"> Access your account to manage information, view updates, and interact with the system’s essential features. Sign in or register to proceed. </h1>
+    </div>
+
+    <div class="card-container">
+      <div class="card user-card">
+        <div class="emoji">👤</div>
+        <h2>User</h2>
+        <p>Login as a regular user to access your dashboard.</p>
+        <button class="login-btn" onclick="window.location.href='user_login.html'">Login</button>
+      </div>
+
+      <div class="card admin-card">
+        <div class="emoji">🛠️</div>
+        <h2>Admin</h2>
+        <p>Login as an admin to manage system settings.</p>
+        <button class="login-btn" onclick="window.location.href='admin_login.html'">Login</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+  // Apply dark mode if enabled in settings
+  if (localStorage.getItem('darkMode') === 'enabled') {
+    document.body.classList.add('dark-mode');
+  }
+</script>
+</body>
+</html>

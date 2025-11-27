@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>INFORMATICS VOTING SYSTEM</h2>
+
+    <div class="profile">
+        <img id="userPhoto" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User Profile">
+        <h3 id="userName">Loading...</h3>
+        <p id="userRole">Loading...</p>
+        <p id="userEmail" style="font-size: 12px; opacity: .7;">Loading...</p>
+    </div>
+
+    <div class="menu-links">
+        <a href="user_dashboard.html">🏠 Dashboard</a>
+        <a href="user_candidate.html">📝 Candidate</a>
+        <a href="user_organization.html">👥 Organizations</a>
+        <a href="user_notification.html">🔔 Notifications</a>
+        <a href="user_support.html">💬 Help</a>
+    </div>
+
+
+</div>
+
+<div class="container">
+    <h2>User Settings</h2>
+
+    <form>
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Email Address">
+        <button type="submit">Save Changes</button>
+        <button type="button" class="sidebar-bottom-link logout" onclick="showLogoutModal()">
+    <i class="fas fa-sign-out-alt"></i> LOG OUT
+  </button>
+
+    </form> 
+</div>
+
+<div class="theme-toggle light-glow" onclick="toggleDarkMode()">
+    <i id="themeIcon" class="fas fa-moon"></i>
+</div>
+
+<!-- Logout Confirmation Modal -->
+<div id="logoutModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Are you sure you want to logout?</h3>
+        <div class="modal-buttons">
+            <button id="confirmLogout">Yes, Logout</button>
+            <button id="cancelLogout">Cancel</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Scripts -->
+<script src="darkmode.js"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyBrMco-_L76Prf7dkCOu3QfBTC5DTB315M",
+  authDomain: "login-form-d9e8b.firebaseapp.com",
+  projectId: "login-form-d9e8b",
+  storageBucket: "login-form-d9e8b.appspot.com",
+  messagingSenderId: "780297703902",
+  appId: "1:780297703902:web:3f1acdbce4faf06aff0d4f",
+  measurementId: "G-VTZ78CJHES"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getFirestore();
+
+// Helper functions
+function setText(id, text) { const el = document.getElementById(id); if(el) el.textContent = text; }
+function setImage(id, src) { const el = document.getElementById(id); if(el) el.src = src; }
+
+// Load user info
+onAuthStateChanged(auth, async (user) => {
+    if(!user) return window.location.href = "user_login.html";
+    try {
+        const uid = user.uid;
+        const snap = await getDoc(doc(db, "users", uid));
+        const data = snap.exists() ? snap.data() : {};
+        const firstName = data.first_name || user.displayName || "User";
+        const lastName = data.last_name || "";
+        const role = (data.role || "USER").toUpperCase();
+        const email = data.email || user.email;
+        const photoURL = data.photoURL || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
+        setText("userName", `${firstName} ${lastName}`.trim());
+        setText("userRole", role);
+        setText("userEmail", email);
+        setImage("userPhoto", photoURL);
+        document.getElementById("fullName").value = `${firstName} ${lastName}`.trim();
+    } catch(err) { console.error(err); }
+});
+
+// Candidate form submission
+document.getElementById("candidateForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fullName = document.getElementById("fullName").value.trim();
+    const position = document.getElementById("position").value;
+    const manifesto = document.getElementById("manifesto").value.trim();
+    const uid = auth.currentUser.uid;
+
+    if(!fullName || !position || !manifesto) return alert("Please fill all fields.");
+
+    const q = query(collection(db, "candidates"), where("uid", "==", uid), where("position", "==", position));
+    const existing = await getDocs(q);
+    if(!existing.empty) return alert(`You have already applied for ${position}`);
+
+    await addDoc(collection(db, "candidates"), { fullName, position, manifesto, uid, timestamp: new Date() });
+    alert("Application submitted successfully!");
+    document.getElementById("candidateForm").reset();
+    document.getElementById("fullName").value = fullName;
+});
+</script>
+
+<!-- Logout JS (reusable for all user pages) -->
+<script type="module" src="logout.js"></script>
+</body>
+</html>

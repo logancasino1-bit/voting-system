@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voting System - About</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="brand">
+    <img src="logo.png" alt="Logo" class="logo-img">
+    <span>Informatics College Northgate</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="settings.html">Settings</a>
+      <a href="help.html">Help</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="about-section">
+      <h1>About the Voting System</h1>
+      <p>Welcome to the Voting System for Major Organizations of Informatics College Northgate, Inc. This system is designed to provide secure, reliable, and easy-to-use online voting for all major student organizations.</p>
+
+      <div class="about-cards">
+        <div class="about-card">
+          <i class='bx bx-shield-check'></i>
+          <h2>Secure</h2>
+          <p>All votes are encrypted to ensure confidentiality and integrity.</p>
+        </div>
+        <div class="about-card">
+          <i class='bx bx-timer'></i>
+          <h2>Fast</h2>
+          <p>Cast your vote quickly and efficiently without waiting in lines.</p>
+        </div>
+        <div class="about-card">
+          <i class='bx bx-group'></i>
+          <h2>User-Friendly</h2>
+          <p>Designed for students and admins with an intuitive interface.</p>
+        </div>
+      </div>
+
+      <div class="team-section">
+        <h2>Project Team</h2>
+        <div class="team-cards">
+          <div class="team-card">
+            <img src="team1.jpg" alt="Team Member 1">
+            <h3>John Doe</h3>
+            <p>Project Lead</p>
+          </div>
+          <div class="team-card">
+            <img src="team2.jpg" alt="Team Member 2">
+            <h3>Jane Smith</h3>
+            <p>Frontend Developer</p>
+          </div>
+          <div class="team-card">
+            <img src="team3.jpg" alt="Team Member 3">
+            <h3>Mark Lee</h3>
+            <p>Backend Developer</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+  // Apply dark mode if enabled in settings
+  if (localStorage.getItem('darkMode') === 'enabled') {
+    document.body.classList.add('dark-mode');
+  }
+</script>
+</body>
+</html>
