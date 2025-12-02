@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Informatics Northgate</title>
+    <title>User Dashboard - iVOTE</title>
     
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/dashboard.css">
@@ -19,12 +19,12 @@
         <aside class="sidebar">
             <div class="brand-section">
                 <img src="1998832.webp" alt="Logo" class="sidebar-logo">
-                <h2>Informatics College</h2>
+                <h2>iVOTE</h2>
             </div>
 
             <div class="sidebar-user">
                 <div class="user-avatar-circle">
-                    <i class="fa-solid fa-user"></i>
+                    <img id="sidebarAvatar" src="https://img.freepik.com/free-icon/user_318-159711.jpg" alt="User">
                 </div>
                 <h4 id="sideName">Loading...</h4>
                 <p class="side-role">Student</p>
@@ -33,23 +33,34 @@
             <ul class="nav-menu">
                 <li class="nav-item">
                     <a href="#" class="nav-link active" id="nav-dashboard">
-                        <i class="fa-solid fa-border-all"></i>
-                        <span>Dashboard</span>
+                        <i class="fa-solid fa-border-all"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="nav-orgs">
+                        <i class="fa-solid fa-sitemap"></i> <span>Organizations</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" id="nav-vote">
-                        <i class="fa-solid fa-check-to-slot"></i>
-                        <span>Vote</span>
+                        <i class="fa-solid fa-check-to-slot"></i> <span>Vote</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" id="nav-guidelines">
-                        <i class="fa-solid fa-book"></i>
-                        <span>Voters Guideline</span>
+                        <i class="fa-solid fa-book"></i> <span>Guidelines</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="nav-settings">
+                        <i class="fa-solid fa-gear"></i> <span>Settings</span>
                     </a>
                 </li>
             </ul>
+
+            <div class="sidebar-bottom">
+                <button id="logoutBtn" class="logout-link"><i class="fa-solid fa-power-off"></i> Log out</button>
+            </div>
         </aside>
 
         <main class="main-content">
@@ -57,7 +68,7 @@
             <header class="dashboard-header">
                 <div class="header-left">
                     <h2 id="pageTitle">Dashboard</h2>
-                    <p id="currentDateDisplay" class="text-muted">...</p>
+                    <p id="currentDateDisplay" class="text-muted">Loading...</p>
                 </div>
 
                 <div class="header-right">
@@ -67,9 +78,12 @@
                             <span id="topName">Student</span>
                             <i class="fa-solid fa-chevron-down"></i>
                         </div>
-
+                        
                         <div class="dropdown-menu hidden" id="dropdownMenu">
-                            <a href="#" id="menu-settings"><i class="fa-solid fa-user-gear"></i> Settings</a>
+                            <a href="admin_dashboard.html" id="adminLinkBtn" style="display: none; background: #f0f9ff; color: #0099ff; font-weight: 700; border-bottom: 1px solid #e0e0e0;">
+                                <i class="fa-solid fa-shield-halved"></i> Admin Panel
+                            </a>
+                            <a href="#" id="menu-settings-link"><i class="fa-solid fa-user-gear"></i> Profile</a>
                             <hr>
                             <a href="#" id="menu-logout" class="danger-text"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</a>
                         </div>
@@ -89,62 +103,42 @@
                     <div class="card election-card">
                         <div class="election-info">
                             <span class="badge-live">● Live Now</span>
-                            <h2>Student Council Election 2023</h2>
+                            <h2>Student Council Election</h2>
                             <p>Cast your vote for the future leaders.</p>
                             <button class="btn-vote-now" id="btnGoToVote">Vote Now</button>
                         </div>
-                        <div class="election-icon">
-                            <i class="fa-solid fa-box-open"></i>
+                        <div class="election-icon"><i class="fa-solid fa-box-open"></i></div>
+                    </div>
+
+                    <div class="card app-promo-card">
+                        <div class="promo-content">
+                            <h3>Run for Office?</h3>
+                            <p>Applications are currently OPEN.</p>
+                            <button class="btn-sm-outline" id="btnOpenAppModal">Apply Now</button>
                         </div>
+                        <div class="promo-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
                     </div>
 
                     <div class="card calendar-card">
-                        <div class="card-header-small">
-                            <h3>Calendar</h3>
-                            <span id="calMonthYear">Month</span>
-                        </div>
-                        <div class="cal-days-header">
-                            <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
-                        </div>
+                        <div class="card-header-small"><h3>Calendar</h3><span id="calMonthYear">Month</span></div>
+                        <div class="cal-days-header"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
                         <div class="cal-grid" id="calendarGrid"></div>
                     </div>
 
                     <div class="card results-card">
-                        <div class="card-header-flex">
-                            <h3>Live Results</h3>
-                            <button class="icon-btn" onclick="window.location.reload()"><i class="fa-solid fa-rotate"></i></button>
-                        </div>
-                        <div class="chart-wrapper">
-                            <canvas id="resultsChart"></canvas>
-                        </div>
+                        <div class="card-header-flex"><h3>Live Results</h3></div>
+                        <div class="chart-wrapper"><canvas id="resultsChart"></canvas></div>
                     </div>
+                </div>
+            </div>
 
-                    <div class="card activities-card">
-                        <h3>Election Activities</h3>
-                        <ul class="timeline">
-                            <li class="completed">
-                                <span class="dot"></span>
-                                <div class="timeline-content">
-                                    <span class="activity">Filing of Candidacy</span>
-                                    <span class="date">Oct 10</span>
-                                </div>
-                            </li>
-                            <li class="active">
-                                <span class="dot"></span>
-                                <div class="timeline-content">
-                                    <span class="activity">Campaign Period</span>
-                                    <span class="date">Nov 01 - Nov 30</span>
-                                </div>
-                            </li>
-                            <li class="pending">
-                                <span class="dot"></span>
-                                <div class="timeline-content">
-                                    <span class="activity">Election Day</span>
-                                    <span class="date">Dec 22</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+            <div id="view-orgs" class="content-view hidden">
+                <div class="section-title-box">
+                    <h2>Student Organizations</h2>
+                    <p>Learn about the parties and their missions.</p>
+                </div>
+                <div id="orgsProContainer" class="dashboard-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+                    <p>Loading Organizations...</p>
                 </div>
             </div>
 
@@ -153,19 +147,13 @@
                     <h2>Official Ballot</h2>
                     <p>Select your preferred candidate for each position.</p>
                 </div>
-                
                 <div id="voteStatusBanner" class="status-banner hidden">
                     <i class="fa-solid fa-circle-check"></i>
-                    <div>
-                        <strong>Vote Submitted!</strong>
-                        <p>Thank you for participating.</p>
-                    </div>
+                    <div><strong>Vote Submitted!</strong><p>Thank you for participating.</p></div>
                 </div>
-
                 <div id="candidatesContainer">
-                    <div class="loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</div>
+                    <p>Loading Candidates...</p>
                 </div>
-
                 <div class="submit-section">
                     <button id="finalSubmitBtn" class="btn-primary-large">SUBMIT VOTE</button>
                 </div>
@@ -173,10 +161,7 @@
 
             <div id="view-guidelines" class="content-view hidden">
                 <div class="card full-width-card">
-                    <div class="guidelines-header">
-                        <i class="fa-solid fa-book-open"></i>
-                        <h2>Voters Guidelines</h2>
-                    </div>
+                    <div class="guidelines-header"><i class="fa-solid fa-book-open"></i><h2>Voters Guidelines</h2></div>
                     <ul class="guidelines-list">
                         <li><span class="num">1</span> Each student is entitled to <strong>one (1)</strong> ballot only.</li>
                         <li><span class="num">2</span> Once submitted, votes are <strong>final</strong>.</li>
@@ -186,11 +171,13 @@
             </div>
 
             <div id="view-settings" class="content-view hidden">
-                
                 <div class="profile-header-card">
-                    <div class="profile-avatar-giant">
-                        <img src="https://img.freepik.com/free-icon/user_318-159711.jpg" alt="Profile">
+                    <div class="profile-avatar-giant" onclick="document.getElementById('profileUpload').click()">
+                        <img src="https://img.freepik.com/free-icon/user_318-159711.jpg" id="profileImgLarge">
+                        <div class="camera-overlay"><i class="fa-solid fa-camera" style="color:#0099ff;"></i></div>
                     </div>
+                    <input type="file" id="profileUpload" hidden accept="image/*">
+                    
                     <div class="profile-identity">
                         <h1 id="profileNameDisplay">User Name</h1>
                         <span class="badge-student">Informatics Student</span>
@@ -205,45 +192,80 @@
                             <button class="btn-save hidden" id="btnSaveProfile"><i class="fa-solid fa-check"></i> Save</button>
                         </div>
                     </div>
-                    
                     <div class="profile-grid">
-                        <div class="p-group">
-                            <label>First Name</label>
-                            <input type="text" id="p_firstname" class="profile-input" disabled>
-                        </div>
-                        <div class="p-group">
-                            <label>Last Name</label>
-                            <input type="text" id="p_lastname" class="profile-input" disabled>
-                        </div>
-                        <div class="p-group">
-                            <label>Student ID</label>
-                            <input type="text" id="p_studentid" class="profile-input" disabled>
-                        </div>
-                        <div class="p-group">
-                            <label>Birthday</label>
-                            <input type="date" id="p_birthday" class="profile-input" disabled>
-                        </div>
-                        <div class="p-group">
-                            <label>Contact Number</label>
-                            <input type="text" id="p_phone" class="profile-input" disabled>
-                        </div>
-                        <div class="p-group">
-                            <label>Email</label>
-                            <input type="email" id="p_email" class="profile-input" disabled>
-                        </div>
-                        <div class="p-group full">
-                            <label>Strand / Course</label>
-                            <input type="text" id="p_strand" class="profile-input" disabled>
-                        </div>
-                        <div class="p-group full">
-                            <label>Address</label>
-                            <input type="text" id="p_address" class="profile-input" disabled>
-                        </div>
+                        <div class="p-group"><label>First Name</label><input type="text" id="p_firstname" class="profile-input" disabled></div>
+                        <div class="p-group"><label>Last Name</label><input type="text" id="p_lastname" class="profile-input" disabled></div>
+                        <div class="p-group"><label>Student ID</label><input type="text" id="p_studentid" class="profile-input" disabled></div>
+                        <div class="p-group"><label>Birthday</label><input type="date" id="p_birthday" class="profile-input" disabled></div>
+                        <div class="p-group"><label>Contact Number</label><input type="text" id="p_phone" class="profile-input" disabled></div>
+                        <div class="p-group"><label>Email</label><input type="email" id="p_email" class="profile-input" disabled></div>
+                        <div class="p-group full"><label>Strand / Course</label><input type="text" id="p_strand" class="profile-input" disabled></div>
+                        <div class="p-group full"><label>Address</label><input type="text" id="p_address" class="profile-input" disabled></div>
                     </div>
                 </div>
             </div>
 
         </main>
+    </div>
+
+    <div class="modal-overlay" id="appModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Candidacy Application</h3>
+                <span class="close-modal" id="closeAppModal">&times;</span>
+            </div>
+            <form id="appForm">
+                <div class="form-group"><label>Full Name</label><input type="text" id="appFullname" readonly></div>
+                <div class="form-group"><label>Position Running For</label>
+                    <select id="appPosition" required>
+                        <option value="President">President</option>
+                        <option value="Vice President">Vice President</option>
+                        <option value="Secretary">Secretary</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Organization</label><input type="text" id="appParty" required></div>
+                <div class="form-group"><label>Platform</label><textarea id="appPlatform" rows="3" required></textarea></div>
+                <button type="submit" class="btn-save-modal">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="orgDetailsModal">
+        <div class="modal-box large-modal">
+            <div style="position:relative;">
+                <img src="" id="detailOrgBanner" class="org-modal-banner">
+                <span class="close-modal" id="closeOrgDetails" style="position:absolute; top:10px; right:10px; background:white; padding:5px 10px; border-radius:50%; cursor:pointer; font-weight:bold;">&times;</span>
+            </div>
+            <div class="org-modal-content">
+                <div class="org-modal-header">
+                    <h2 id="detailOrgName">Organization Name</h2>
+                    <span id="detailOrgSlogan" style="color:var(--primary-blue); font-weight:600;">Slogan</span>
+                </div>
+                <div class="org-mission-box">
+                    <p><strong>Mission:</strong> <span id="detailOrgMission">...</span></p>
+                    <br>
+                    <p><strong>Goal:</strong> <span id="detailOrgGoal">...</span></p>
+                </div>
+                <h3 style="color:#003366; margin-bottom:15px;">Official Candidates</h3>
+                <div id="detailCandidatesGrid" class="org-cands-grid">
+                    </div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <button id="btnApplyToOrgModal" class="btn-primary-large" style="width:100%;">Apply to this Organization</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal-box" style="text-align: center;">
+            <div style="font-size: 40px; color: #d32f2f; margin-bottom: 15px;"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+            <h3>Sign Out</h3>
+            <p>Are you sure you want to log out?</p>
+            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+                <button class="btn-edit" id="cancelLogout">Cancel</button>
+                <button class="btn-save" style="background:#d32f2f;" id="confirmLogout">Log Out</button>
+            </div>
+        </div>
     </div>
 
     <script type="module" src="js/user_dashboard.js"></script>

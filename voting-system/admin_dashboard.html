@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - iVOTE</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="brand-section">
+                <img src="1998832.webp" class="sidebar-logo">
+                <h2>iVOTE <span style="font-size:12px; background:#e3f2fd; color:#0099ff; padding:2px 5px; border-radius:5px;">Admin</span></h2>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" id="nav-overview"><i class="fa-solid fa-gauge"></i> Overview</a></li>
+                <li><a href="#" class="nav-link" id="nav-orgs"><i class="fa-solid fa-sitemap"></i> Organizations</a></li>
+                <li><a href="#" class="nav-link" id="nav-candidates"><i class="fa-solid fa-users"></i> Candidates</a></li>
+                <li><a href="#" class="nav-link" id="nav-settings"><i class="fa-solid fa-sliders"></i> Settings</a></li>
+            </ul>
+
+            <button id="adminLogoutBtn" class="logout-link"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+        </aside>
+
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h2 id="pageTitle">Overview</h2>
+                    <p id="currentDate">Loading...</p>
+                </div>
+                <div class="header-right">
+                    <div class="user-pill">
+                        <div style="background:#003366; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white;"><i class="fa-solid fa-user-shield"></i></div>
+                        <span style="margin-left:10px; font-weight:600;">Administrator</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-body">
+                
+                <div id="view-overview" class="content-view">
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <h3>Total Voters</h3>
+                            <h2 id="statVoters" style="font-size:28px; color:#003366;">0</h2>
+                        </div>
+                        <div class="card">
+                            <h3>Votes Cast</h3>
+                            <h2 id="statVotes" style="font-size:28px; color:#0099ff;">0</h2>
+                        </div>
+                        <div class="card" style="grid-column: 1/-1;">
+                            <h3>Live Results</h3>
+                            <div class="chart-wrapper"><canvas id="adminResultsChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-orgs" class="content-view hidden">
+                    <input type="file" id="orgBannerInput" hidden accept="image/*">
+                    <div id="orgsContainer" class="dashboard-grid">
+                        <p>Loading Organizations...</p>
+                    </div>
+                </div>
+
+                <div id="view-candidates" class="content-view hidden">
+                    <div class="card">
+                        <h3>Official Candidates</h3>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Org</th>
+                                    <th>Votes</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="candidatesTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-settings" class="content-view hidden">
+                    <div class="card" style="border:1px solid #ff9800; background:#fffbf0;">
+                        <h3 style="color:#f57c00;">⚠️ Database Tools</h3>
+                        <p style="font-size:13px; color:#666; margin-bottom:20px;">Use this to fix blank screens or reset the election.</p>
+                        <button id="btnSeedDatabase" class="btn-primary" style="background:#f57c00;">Reset & Seed Database</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="js/admin_dashboard.js"></script>
+</body>
+</html>
